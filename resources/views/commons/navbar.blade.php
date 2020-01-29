@@ -2,8 +2,8 @@
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark"> 
         <a class="navbar-brand" href="/">Enjoywriting</a>
          
-         @if(Auth::check())
-            <a class="btn btn-primary ml-3" href="#">投稿する</a>
+    　  @if(Auth::check())
+            {!! link_to_route('enposts.create', '投稿する', [], ['class' => 'btn btn-primary ml-3']) !!}
         @endif
          
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-bar">

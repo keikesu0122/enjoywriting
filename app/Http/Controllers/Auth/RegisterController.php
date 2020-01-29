@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use \InterventionImage;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -63,15 +64,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $filename="";
         $request=request();
-        $path=$request->file('selfimg')->store('public/self_images');
-        
+        if(!empty($request->selfimg)){
+            $originalimage=$request->file('selfimg');
+            $filename=time().'.'.$originalimage->getClientOriginalExtension();
+            $selfimage=InterventionImage::make($originalimage)->resize(150, null, function ($constraint) {$constraint->aspectRatio();});
+            $path=$selfimage->save(storage_path().'/app/public/self_images/'.$filename);
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'introtext'=> $data['introtext'],
-            'selfimg'=> $path
+            'selfimg'=> $filename
         ]);
     }
     
