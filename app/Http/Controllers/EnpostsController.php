@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\EnpostRequest;
 
 use App\Enpost;
+use App\Tag;
 
 class EnpostsController extends Controller
 {
@@ -38,7 +39,7 @@ class EnpostsController extends Controller
         
         $filename="";
         $request=request();
-        if(!empty($request->postimg)){
+        if($request->postimg!=null){
             $originalimage=$request->file('postimg');
             $filename=time().'.'.$originalimage->getClientOriginalExtension();
             $postimage=InterventionImage::make($originalimage)->resize(150, null, function ($constraint) {$constraint->aspectRatio();});
@@ -53,6 +54,19 @@ class EnpostsController extends Controller
            'postimg'=>$filename,
            'status'=>0,
         ]);
+        
+        $enpost = new Enpost;
+        $max_enpost_id=Enpost::max('id');
+        $enpost=Enpost::find($max_enpost_id);
+        $combinedtags=$enpost->tag;
+        $tags=explode(",",$combinedtags);
+        
+        foreach ($tags as $tag){
+            $enpost->tags()->create([
+               'enpost_id'=>$enpost->id,
+               'tag'=>$tag,
+            ]);
+        }
         
         return back();
     }
