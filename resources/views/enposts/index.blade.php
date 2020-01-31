@@ -15,7 +15,9 @@
                         <div style="display:inline">
                             @if(Auth::user()->id==$enpost->user->id)
                                 {!! link_to_route('enposts.edit', '編集', ['id'=>$enpost->id], ['class' => 'btn btn-primary']) !!}
-                                <a class="btn btn-danger" href="#">削除</a>
+                                {!! Form::open(['route' => ['enposts.destroy', $enpost->id], 'method' => 'delete']) !!}
+                                    {!! Form::submit('削除', ['class' => 'btn btn-danger btn-sm']) !!}
+                                {!! Form::close() !!}
                             @else
                                 <a class="btn btn-secondary" href="#">添削</a>
                             @endif

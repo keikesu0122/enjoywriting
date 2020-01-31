@@ -29,6 +29,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('enposts', 'EnpostsController@store')->name('enposts.store');
     //編集
     Route::get('enposts/{id}/edit', 'EnpostsController@edit')->name('enposts.edit');
-    Route::post('enposts/{id}', 'EnpostsController@update')->name('enposts.update');
+    Route::put('enposts/{id}', 'EnpostsController@update')->name('enposts.update');
+    //削除
+    Route::delete('enposts/{id}', 'EnpostsController@destroy')->name('enposts.destroy');
 });
 

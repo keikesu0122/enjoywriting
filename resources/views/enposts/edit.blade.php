@@ -4,7 +4,7 @@
     <div class="row">
         @if(Auth::check())
             <div class="col-sm-6">
-                {!! Form::model($enpost, ['route' => ['enposts.update', $enpost->id], 'files'=>true]) !!}
+                {!! Form::model($enpost, ['route' => ['enposts.update', $enpost->id], 'files'=>true, 'method'=>'put'] ) !!}
                     {{csrf_field()}}
                     <div class="form-group form-inline">
                         {!! Form::label('title', 'タイトル') !!}
