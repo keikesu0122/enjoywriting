@@ -70,4 +70,90 @@ class EnpostsController extends Controller
         
         return back();
     }
+    
+    public function edit($id)
+    {
+        $enpost=Enpost::find($id);
+        
+        return view('enposts.edit',[
+            'enpost'=>$enpost,    
+        ]);
+    }
+    
+    public function update(EnpostRequest $request, $id)
+    {
+        $enpost=Enpost::find($id);
+        
+        $filename="";
+        if($request->postimg!=null){
+            $originalimage=$request->file('postimg');
+            if($enpost->postimg!=null){
+                $filename=$enpost->postimg;   
+            }else{
+                $filename=time().'.'.$originalimage->getClientOriginalExtension();
+            }
+            $postimage=InterventionImage::make($originalimage)->resize(150, null, function ($constraint) {$constraint->aspectRatio();});
+            $path=$postimage->save(storage_path().'/app/public/self_images/'.$filename);
+        }else{
+            if($enpost->postimg!=null){
+                $imgpath=storage_path().'/app/public/post_images'.$enpost->postimg;
+                \File::delete($imgpath);
+            }
+        }
+        
+        $enpost->title=$request->title;
+        $enpost->entext=$request->entext;
+        $enpost->jptext=$request->jptext;
+        $enpost->tag=$request->tag;
+        $enpost->postimg=$filename;
+        $enpost->save();
+        
+        
+        //dd($enpost->id);
+        
+        $combinedtags=$enpost->tag;
+        $newtags=explode(",",$combinedtags);
+        
+        $oldtags=Tag::where('enpost_id','=',$enpost->id)->get();
+        //dd($oldtags);
+        foreach($oldtags as $oldtag){
+            //dd($oldtag->tag);
+            $oldtag->delete();
+        }
+        
+        foreach ($newtags as $newtag){
+            $enpost->tags()->create([
+               'enpost_id'=>$enpost->id,
+               'tag'=>$newtag,
+            ]);
+        }
+        /*$count_tags=$enpost->tags()->count();
+        $i=0;
+        $change_tags=[];
+        $add_tags=[];
+        
+        /*foreach($tags as $separatedtag){
+            if($i<$count_tags){
+                $change_tags[]=$separatedtag;
+            }else{
+                $add_tags[]=$separatedtag;
+            }
+            $i++;
+        }
+        
+        $tagclasses = Tag::where('enpost_id', $enpost->id);
+        foreach (array_map($change_tags, $tagclasses) as [$eachtag, $eachtagclass]){
+                $eachtagclass->tag=$eachtag;
+                $eachtagclass->save();
+        }
+        
+        foreach($add_tags as $eachtag){
+                $enpost->tags()->create([
+               'enpost_id'=>$enpost->id,
+               'tag'=>$eachtag,
+               ]);
+        }*/
+        
+        return back();
+    }
 }

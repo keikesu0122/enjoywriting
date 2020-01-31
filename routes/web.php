@@ -27,6 +27,8 @@ Route::group(['middleware' => ['auth']], function () {
     //投稿
     Route::get('enposts/create', 'EnpostsController@create')->name('enposts.create');
     Route::post('enposts', 'EnpostsController@store')->name('enposts.store');
-   
+    //編集
+    Route::get('enposts/{id}/edit', 'EnpostsController@edit')->name('enposts.edit');
+    Route::post('enposts/{id}', 'EnpostsController@update')->name('enposts.update');
 });
 
