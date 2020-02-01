@@ -25,7 +25,7 @@ class EnpostRequest extends FormRequest
     {
         return [
             'title'=>'required|regex:/^[a-zA-Z0-9- ]+$/|min:5',
-            'entext'=>'required|regex:/^[a-zA-Z0-9- ]+$/|min:10',
+            'entext'=>'required|regex:/^[a-zA-Z0-9- -.-,-?-!]+$/|min:10',
             'postimg'=>'file|image|mimes:jpeg,png,jpg|max:4096'
         ];
     }

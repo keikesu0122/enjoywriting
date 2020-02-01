@@ -96,7 +96,7 @@ class EnpostsController extends Controller
                 $filename=time().'.'.$originalimage->getClientOriginalExtension();
             }
             $postimage=InterventionImage::make($originalimage)->resize(150, null, function ($constraint) {$constraint->aspectRatio();});
-            $path=$postimage->save(storage_path().'/app/public/self_images/'.$filename);
+            $postimage->save(storage_path().'/app/public/post_images/'.$filename);
         }else{
             if($enpost->postimg!=null){
                 $imgpath=storage_path().'/app/public/post_images'.$enpost->postimg;
@@ -139,6 +139,23 @@ class EnpostsController extends Controller
             $enpost->delete();
         }
 
-        return back();
+        return redirect('/');
+    }
+    
+    public function show($id)
+    {
+        $data=[];
+        $enpost=Enpost::find($id);
+        $tags=Tag::where('enpost_id','=',$id)->get();
+        //$tags=$enpost->tags()->get();
+        
+        //dd($tags->enpost_id);
+        
+        $data=[
+            'enpost'=>$enpost,
+            'tags'=>$tags,
+        ];
+        
+        return view('enposts.show',$data);
     }
 }

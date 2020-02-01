@@ -32,5 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('enposts/{id}', 'EnpostsController@update')->name('enposts.update');
     //削除
     Route::delete('enposts/{id}', 'EnpostsController@destroy')->name('enposts.destroy');
+    //投稿詳細
+    Route::get('enposts/{id}', 'EnpostsController@show')->name('enposts.show');
 });
 

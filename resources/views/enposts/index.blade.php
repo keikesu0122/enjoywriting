@@ -9,12 +9,12 @@
                     <div class="media-body">
                         <div>
                             <a href="#" >{{$enpost->user->name}}</a><br>
-                            <a href="#">{{$enpost->title}}</a><br>
+                            <a href="{{ route('enposts.show', ['id' => $enpost->id]) }}">{{$enpost->title}}</a>
                             posted at {{ $enpost->created_at }}
                         </div>
-                        <div style="display:inline">
+                        <div class="form-inline mt-2">
                             @if(Auth::user()->id==$enpost->user->id)
-                                {!! link_to_route('enposts.edit', '編集', ['id'=>$enpost->id], ['class' => 'btn btn-primary']) !!}
+                                {!! link_to_route('enposts.edit', '編集', ['id'=>$enpost->id], ['class' => 'btn btn-primary mr-2']) !!}
                                 {!! Form::open(['route' => ['enposts.destroy', $enpost->id], 'method' => 'delete']) !!}
                                     {!! Form::submit('削除', ['class' => 'btn btn-danger btn-sm']) !!}
                                 {!! Form::close() !!}
