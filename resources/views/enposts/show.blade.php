@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('enposts.enpostsshow', ['enpost'=>$enpost, 'tags'=>$tags])
+    @include('commons.enpostsdetails', ['enpost'=>$enpost, 'tags'=>$tags])
     <div class="row mt-4">
         <div class="col-sm-3 mb-5">
             <div class="form-inline">

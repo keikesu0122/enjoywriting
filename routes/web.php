@@ -37,5 +37,8 @@ Route::group(['middleware' => ['auth']], function () {
     //添削
     Route::get('corrections/{enpost_id}/correct', 'CorrectionsController@correct')->name('corrections.correct');
     Route::post('corrections/{enpost_id}', 'CorrectionsController@uploadcorrection')->name('corrections.uploadcorrection');
+    //ユーザ詳細
+    Route::get('users/{id}', 'UsersController@show')->name('users.show');
+    Route::get('users/{id}/corrections', 'UsersController@showcorrections')->name('users.showcorrections');
 });
 

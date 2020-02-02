@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('enposts.enpostsshow', ['enpost'=>$enpost, 'tags'=>$tags])
+    @include('commons.enpostsdetails', ['enpost'=>$enpost, 'tags'=>$tags])
     @if(Auth::check())
         <div class="col-sm-6 form-inline">
             {!! Form::model($correction, ['route' => ['corrections.uploadcorrection', $enpost->id]]) !!}

@@ -14,7 +14,7 @@
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
                 @if(Auth::check())
-                    <li class="nav-item"><a href="#" class="nav-link">マイページ</a></li>
+                    <li class="nav-item mr-3">{!! link_to_route('users.show', 'マイページ', ['id'=>\Auth::user()->id]) !!}</li>
                     <li class="nav-item">{!! link_to_route('logout.get', 'ログアウト') !!}</li>
                 @else
                     <li class="nav-item mr-3">{!! link_to_route('signup.get', '会員登録') !!}</li>
