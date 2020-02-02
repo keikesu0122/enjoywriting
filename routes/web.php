@@ -34,5 +34,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('enposts/{id}', 'EnpostsController@destroy')->name('enposts.destroy');
     //投稿詳細
     Route::get('enposts/{id}', 'EnpostsController@show')->name('enposts.show');
+    //添削
+    Route::get('corrections/{enpost_id}/correct', 'CorrectionsController@correct')->name('corrections.correct');
+    Route::post('corrections/{enpost_id}', 'CorrectionsController@uploadcorrection')->name('corrections.uploadcorrection');
 });
 

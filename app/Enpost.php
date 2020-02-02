@@ -17,4 +17,9 @@ class Enpost extends Model
     {
         return $this->hasMany(Tag::class);
     }
+    
+    public function corrections()
+    {
+        return $this->hasMany(Correction::class);
+    }
 }

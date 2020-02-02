@@ -4,7 +4,7 @@
     <div class="row">
         @if(Auth::check())
             <div class="col-sm-6">
-                {!! Form::model($enpost, ['route' => 'enposts.store', 'files'=>true]) !!}
+                {!! Form::open(['route' => 'enposts.store', 'files'=>true]) !!}
                     {{csrf_field()}}
                     <div class="form-group form-inline">
                         {!! Form::label('title', 'タイトル') !!}

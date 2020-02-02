@@ -19,7 +19,7 @@
                                     {!! Form::submit('削除', ['class' => 'btn btn-danger btn-sm']) !!}
                                 {!! Form::close() !!}
                             @else
-                                <a class="btn btn-secondary" href="#">添削</a>
+                                {!! link_to_route('corrections.correct', '添削', ['user_id'=>$enpost->user_id, 'enpost_id'=>$enpost->id], ['class' => 'btn btn-secondary mr-2']) !!}
                             @endif
                         </div>
                     </div>

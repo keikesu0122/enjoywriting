@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Enpost::class);
     }
+    
+    public function corrections()
+    {
+        return $this->hasMany(Correction::class);
+    }
 }
