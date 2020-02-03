@@ -70,7 +70,8 @@ class RegisterController extends Controller
             $originalimage=$request->file('selfimg');
             $filename=time().'.'.$originalimage->getClientOriginalExtension();
             $selfimage=InterventionImage::make($originalimage)->resize(150, null, function ($constraint) {$constraint->aspectRatio();});
-            $path=$selfimage->save(storage_path().'/app/public/self_images/'.$filename);
+        }else{
+            $filename='default.jpg';
         }
 
         return User::create([
