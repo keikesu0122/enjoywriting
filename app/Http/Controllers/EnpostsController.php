@@ -13,11 +13,17 @@ use App\User;
 
 class EnpostsController extends Controller
 {
+    //トップページで投稿一覧を表示
     public function index()
     {
         $data=[];
         if(\Auth::check()){
             $enposts=Enpost::orderBy('created_at','desc')->paginate(10);
+            
+            foreach ($enposts as $enpost){
+                $enpost->user()->first()->ImgResize(120);
+            }
+            
             $data=[
               'enposts'=>$enposts,  
             ];
@@ -26,37 +32,35 @@ class EnpostsController extends Controller
         return view('enposts.index',$data);
     }
     
+    //投稿をする
     public function create()
     {
         $enpost = new Enpost;
         
-        /*return view('enposts.create',[
-            'enpost'=> $enpost,    
-        ]);*/
         return view('enposts.create');
     }
     
     public function store(EnpostRequest $request)
     {
         
+        //画像の保存処理（storageの下に保存）
         $filename="";
         $request=request();
         if($request->postimg!=null){
             $originalimage=$request->file('postimg');
             $filename=time().'.'.$originalimage->getClientOriginalExtension();
-            $postimage=InterventionImage::make($originalimage)->resize(150, null, function ($constraint) {$constraint->aspectRatio();});
-            $path=$postimage->save(storage_path().'/app/public/post_images/'.$filename);
+            $postimage=InterventionImage::make($originalimage)->save(storage_path().'/app/public/post_images/'.$filename);
         }
         
         $request->user()->enposts()->create([
            'title'=>$request->title,
            'entext'=>$request->entext,
            'jptext'=>$request->jptext,
-           //'tag'=>$request->tag,
            'postimg'=>$filename,
            'status'=>0,
         ]);
         
+        //タグは1単語ずつ分割して保存
         if($request->tag!=null){
             $max_enpost_id=Enpost::max('id');
             $enpost=Enpost::find($max_enpost_id);
@@ -73,12 +77,11 @@ class EnpostsController extends Controller
         return back();
     }
     
+    //投稿の編集
     public function edit($id)
     {
         
         $enpost=Enpost::find($id);
-        
-        //dd($enpost->id);
         
         return view('enposts.edit',[
             'enpost'=>$enpost,    
@@ -97,8 +100,7 @@ class EnpostsController extends Controller
             }else{
                 $filename=time().'.'.$originalimage->getClientOriginalExtension();
             }
-            $postimage=InterventionImage::make($originalimage)->resize(150, null, function ($constraint) {$constraint->aspectRatio();});
-            $postimage->save(storage_path().'/app/public/post_images/'.$filename);
+            $postimage=InterventionImage::make($originalimage)->save(storage_path().'/app/public/post_images/'.$filename);
         }else{
             if($enpost->postimg!=null){
                 $imgpath=storage_path().'/app/public/post_images'.$enpost->postimg;
@@ -130,11 +132,10 @@ class EnpostsController extends Controller
         return back();
     }
     
+    //投稿を削除
     public function destroy($id)
     {
         $enpost = Enpost::find($id);
-        
-        //dd($enpost->id);
 
         if (\Auth::id() === $enpost->user_id) {
             $enpost->delete();
@@ -143,19 +144,24 @@ class EnpostsController extends Controller
         return redirect('/');
     }
     
+    //投稿の詳細を表示
     public function show($id)
     {
         $data=[];
         $enpost=Enpost::find($id);
-        //$user=User::find($enpost->user_id);
+        if($enpost->postimg!=""){
+            $enpost->ImgResize(200);
+        }
         $tags=Tag::where('enpost_id','=',$id)->get();
         $corrections=Correction::where('enpost_id','=',$enpost->id)->get();
+        $bestcorrection=Correction::where('enpost_id','=',$id)->where('bcflag','=',1)->first();
+        
         
         $data=[
-            //'users'=>$users,
             'enpost'=>$enpost,
             'tags'=>$tags,
             'corrections'=>$corrections,
+            'bestcorrection'=>$bestcorrection,
         ];
         
         return view('enposts.show',$data);

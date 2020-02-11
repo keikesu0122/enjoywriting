@@ -12,12 +12,19 @@ use App\Correction;
 
 class CorrectionsController extends Controller
 {
+    //添削する
     public function correct($enpost_id)
     {
-        
         $data=[];
-        $correction = new Correction;
+        $user=\Auth::user();
         $enpost=Enpost::find($enpost_id);
+        if($enpost->is_correctedby()){
+            $correction_id=$enpost->corrections()->where('user_id','=',$user->id)->first()->id;
+            $correction=Correction::find($correction_id);
+        }else{
+            $correction = new Correction;
+        }
+    
         $tags=Tag::where('enpost_id','=',$enpost_id)->get();
         
         $data=[
@@ -35,23 +42,76 @@ class CorrectionsController extends Controller
         $enpost=Enpost::find($enpost_id);
         $user=\Auth::user();
         
-        //dd($user->name);
-        
         $enpost->corrections()->create([
             'user_id'=>$user->id,
             'crtext'=>$request->crtext,
             'comment'=>$request->comment,
+            'bcflag'=>false,
         ]);
         
         $tags=Tag::where('enpost_id'.'=',$enpost_id);
         $corrections=Correction::where('enpost_id','=', $enpost_id)->get();
+        $bestcorrection=null;
         
         $data=[
             'enpost'=>$enpost,
             'tags'=>$tags,
             'corrections'=>$corrections,
+            'bestcorrection'=>$bestcorrection,
         ];
         
         return view('enposts.show',$data);
+    }
+    
+    //添削を編集
+    public function updatecorrection(CorrectionRequest $request, $enpost_id)
+    {
+        $user=\Auth::user();
+        $correction= Correction::where('enpost_id','=',$enpost_id)->where('user_id','=',$user->id)->first();
+        $enpost=Enpost::find($enpost_id);
+        
+        $correction->crtext=$request->crtext;
+        $correction->comment=$request->comment;
+        $correction->save();
+        
+        $tags=Tag::where('enpost_id'.'=',$enpost_id);
+        $corrections=Correction::where('enpost_id','=', $enpost_id)->get();
+        $bestcorrection=null;
+        
+        $data=[
+            'enpost'=>$enpost,
+            'tags'=>$tags,
+            'corrections'=>$corrections,
+            'bestcorrection'=>$bestcorrection,
+        ];
+        
+        return view('enposts.show',$data);
+    }
+    
+    //添削を削除
+    public function destroy($id)
+    {
+        $correction = Correction::find($id);
+
+        if (\Auth::id() === $correction->user_id) {
+            $correction->delete();
+        }
+
+        return redirect('/');
+    }
+    
+    //ベスト添削が選ばれた時にフラグやステータスを変更
+    public function bestcorrection($correction_id)
+    {
+        $correction=Correction::find($correction_id);
+        $correction->bcflag=true;
+        $correction->save();
+        
+        
+        $enpost=Enpost::find($correction->enpost()->first()->id);
+        $enpost->status=1;
+        $enpost->save();
+        
+        return back();
     }
 }

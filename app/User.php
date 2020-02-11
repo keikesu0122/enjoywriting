@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use \InterventionImage;
 
 class User extends Authenticatable
 {
@@ -35,5 +36,18 @@ class User extends Authenticatable
     public function corrections()
     {
         return $this->hasMany(Correction::class);
+    }
+    
+    public function likeenposts()
+    {
+        return $this->belongsToMany(Enpost::class, 'likes', 'user_id', 'enpost_id')->withTimestamps();
+    }
+    
+    //画像サイズの変更
+    public function ImgResize($size)
+    {
+        InterventionImage::make(storage_path().'/app/public/self_images/'.$this->selfimg)
+        ->resize($size, null, function ($constraint) {$constraint->aspectRatio();})
+        ->save(storage_path().'/app/public/self_images/'.$this->selfimg);
     }
 }

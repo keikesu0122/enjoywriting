@@ -33,7 +33,6 @@
                     
                     {!! Form::submit('投稿する', ['class' => 'btn btn-primary btn-block mb-4']) !!}
                 {!! Form::close() !!}
-                <a class="btn btn-danger btn-block" href="#">キャンセル</a>
             </div>
         @endif
     </div>

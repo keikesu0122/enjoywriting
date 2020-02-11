@@ -36,9 +36,22 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('enposts/{id}', 'EnpostsController@show')->name('enposts.show');
     //添削
     Route::get('corrections/{enpost_id}/correct', 'CorrectionsController@correct')->name('corrections.correct');
+    Route::put('corrections/{correction_id}/bccorrection', 'CorrectionsController@bestcorrection')->name('corrections.bestcorrection');
     Route::post('corrections/{enpost_id}', 'CorrectionsController@uploadcorrection')->name('corrections.uploadcorrection');
+    Route::put('corrections/{enpost_id}', 'CorrectionsController@updatecorrection')->name('corrections.updatecorrection');
+     Route::delete('corrections/{correction_id}', 'CorrectionsController@destroy')->name('corrections.destroy');
+    //ランキング
+    Route::get('users/ranking', 'UsersController@ranking')->name('users.ranking');
     //ユーザ詳細
     Route::get('users/{id}', 'UsersController@show')->name('users.show');
     Route::get('users/{id}/corrections', 'UsersController@showcorrections')->name('users.showcorrections');
+    //ユーザ情報編集
+    Route::get('users/{id}/edit', 'UsersController@edit')->name('users.edit');
+    Route::put('users/{id}', 'UsersController@update')->name('users.update');
+    //ユーザ削除
+    Route::delete('users/{id}', 'UsersController@destroy')->name('users.destroy');
+    //いいね
+    Route::post('enposts/{id}/like', 'EnpostLikeController@store')->name('enposts.like');
+    Route::delete('enposts/{id}/dislike', 'EnpostLikeController@destroy')->name('enposts.dislike');
 });
 
