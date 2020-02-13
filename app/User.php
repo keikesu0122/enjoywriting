@@ -43,11 +43,4 @@ class User extends Authenticatable
         return $this->belongsToMany(Enpost::class, 'likes', 'user_id', 'enpost_id')->withTimestamps();
     }
     
-    //画像サイズの変更
-    public function ImgResize($size)
-    {
-        InterventionImage::make(storage_path().'/app/public/self_images/'.$this->selfimg)
-        ->resize($size, null, function ($constraint) {$constraint->aspectRatio();})
-        ->save(storage_path().'/app/public/self_images/'.$this->selfimg);
-    }
 }

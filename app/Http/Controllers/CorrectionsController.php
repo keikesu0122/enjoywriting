@@ -53,14 +53,15 @@ class CorrectionsController extends Controller
         $corrections=Correction::where('enpost_id','=', $enpost_id)->get();
         $bestcorrection=null;
         
-        $data=[
+        /*$data=[
             'enpost'=>$enpost,
             'tags'=>$tags,
             'corrections'=>$corrections,
             'bestcorrection'=>$bestcorrection,
-        ];
+        ];*/
         
-        return view('enposts.show',$data);
+        //return view('enposts.show',$data);
+        return redirect('/');
     }
     
     //添削を編集
@@ -78,14 +79,15 @@ class CorrectionsController extends Controller
         $corrections=Correction::where('enpost_id','=', $enpost_id)->get();
         $bestcorrection=null;
         
-        $data=[
+        /*$data=[
             'enpost'=>$enpost,
             'tags'=>$tags,
             'corrections'=>$corrections,
             'bestcorrection'=>$bestcorrection,
-        ];
+        ];*/
         
-        return view('enposts.show',$data);
+        //return view('enposts.show',$data);
+        return redirect('/');
     }
     
     //添削を削除

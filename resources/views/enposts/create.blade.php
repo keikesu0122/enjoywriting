@@ -29,6 +29,7 @@
                     <div class="form-group form-inline">
                         {!! Form::label('tag', 'タグ') !!}
                         {!! Form::text('tag',old('tag'), ['class' => 'form-control']) !!}
+                        <label>複数のタグを入力する場合には各タグをカンマで区切ってください。</label>
                     </div>
                     
                     {!! Form::submit('投稿する', ['class' => 'btn btn-primary btn-block mb-4']) !!}

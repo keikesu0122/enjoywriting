@@ -42,11 +42,4 @@ class Enpost extends Model
         return $this->corrections()->where('user_id','=',$user->id)->exists();
     }
     
-    //画像のサイズを変更
-    public function ImgResize($size)
-    {
-        InterventionImage::make(storage_path().'/app/public/post_images/'.$this->postimg)
-        ->resize($size, null, function ($constraint) {$constraint->aspectRatio();})
-        ->save(storage_path().'/app/public/post_images/'.$this->postimg);
-    }
 }

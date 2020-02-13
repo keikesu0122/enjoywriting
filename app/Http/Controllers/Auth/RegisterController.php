@@ -66,11 +66,11 @@ class RegisterController extends Controller
     {
         $filename="";
         $request=request();
+        
         if($request->selfimg!=null){
-            $originalimage=$request->file('selfimg');
-            $filename=time().'.'.$originalimage->getClientOriginalExtension();
-            $selfimage=InterventionImage::make($originalimage)->resize(150, null, function ($constraint) {$constraint->aspectRatio();});
-            $selfimage->save(storage_path().'/app/public/self_images/'.$filename);
+            $selfimage=$request->file('selfimg');
+            $filename=time().'.'.$selfimage->getClientOriginalExtension();
+            \Storage::disk('s3')->putFileAs('/self_images/',$selfimage, $filename,'public');
         }else{
             $filename='default.jpg';
         }

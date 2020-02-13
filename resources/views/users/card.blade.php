@@ -3,7 +3,7 @@
         <h3 class="card-title">{{ $user->name }}</h3>
     </div>
     <div class="card-body">
-        <img class="rounded img-fluid" src="{{ asset('/storage/self_images/'.$user->selfimg) }}" alt="">
+        <img class="rounded img-fluid" src="{{\Storage::disk('s3')->url('self_images/'.$user->selfimg)}}" width="200" height="auto" alt="">
     </div>
     <div class="card-body">
         {{$user->introtext}}

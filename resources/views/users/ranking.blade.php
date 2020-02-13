@@ -9,7 +9,7 @@
                     @foreach ($users_enpost as $user_enpost)
                         @if($user_enpost->enposts_count!=0)
                             <li class="media mb-3">
-                                <img class="mr-2 rounded" src="{{ asset('/storage/self_images/'.$user_enpost->selfimg) }}" alt="">
+                                <img class="mr-2 rounded" src="{{\Storage::disk('s3')->url('self_images/'.$user_enpost->selfimg)}}" width="120" height="auto" alt="">
                                 <div class="media-body">
                                     <div>
                                         <a href="{{ route('users.show', ['id' => $user_enpost->id]) }}">{{$user_enpost->name}}</a><br>
@@ -27,7 +27,7 @@
                     @foreach ($users_correction as $user_correction)
                         @if($user_correction->corrections_count!=0)
                             <li class="media mb-3">
-                                <img class="mr-2 rounded" src="{{ asset('/storage/self_images/'.$user_correction->selfimg) }}" alt="">
+                                <img class="mr-2 rounded" src="{{\Storage::disk('s3')->url('self_images/'.$user_correction->selfimg)}}" width="120" height="auto" alt="">
                                 <div class="media-body">
                                     <div>
                                         <a href="{{ route('users.show', ['id' => $user_correction->id]) }}">{{$user_correction->name}}</a><br>
@@ -45,7 +45,7 @@
                     @foreach ($users_bc as $user_bc)
                         @if($user_bc->corrections_count!=0)
                             <li class="media mb-3">
-                                <img class="mr-2 rounded" src="{{ asset('/storage/self_images/'.$user_bc->selfimg) }}" alt="">
+                                <img class="mr-2 rounded" src="{{\Storage::disk('s3')->url('self_images/'.$user_bc->selfimg)}}" width="120" height="auto" alt="">
                                 <div class="media-body">
                                     <div>
                                         <a href="{{ route('users.show', ['id' => $user_bc->id]) }}">{{$user_bc->name}}</a><br>

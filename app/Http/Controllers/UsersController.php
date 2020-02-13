@@ -14,13 +14,13 @@ class UsersController extends Controller
     {
         $data=[];
         $user=User::find($id);
-        $user->ImgResize(120);
         $enposts=$user->enposts()->get();
         
         $data=[
           'user'=>$user,
           'enposts'=>$enposts,
         ];
+        
         
         return view('users.show', $data);
         
@@ -34,7 +34,6 @@ class UsersController extends Controller
         $corrections=$user->corrections()->get();
         foreach($corrections as $correction){
             $enpost=Enpost::where('id','=', $correction->enpost_id)->first();
-            $enpost->ImgResize(120);
             $enposts[]=$enpost;
         }
         
@@ -61,17 +60,16 @@ class UsersController extends Controller
         
         $filename="";
         if($request->selfimg!=null){
-            $originalimage=$request->file('selfimg');
+            $selfimage=$request->file('selfimg');
             if($user->selfimg!="default.jpg"){
                 $filename=$user->selfimg;   
             }else{
-                $filename=time().'.'.$originalimage->getClientOriginalExtension();
+                $filename=time().'.'.$selfimage->getClientOriginalExtension();
             }
-            InterventionImage::make($originalimage)->save(storage_path().'/app/public/self_images/'.$filename);
+            \Storage::disk('s3')->putFileAs('/self_images/',$selfimage, $filename,'public');
         }else{
             if($user->selfimg!=null){
-                $imgpath=storage_path().'/app/public/self_images'.$user->selfimg;
-                \File::delete($imgpath);
+                \Storage::disk('s3')->delete('/self_images/'.$user->selfimg);
             }
             $filename="default.jpg";
         }
@@ -89,6 +87,7 @@ class UsersController extends Controller
     public function destroy()
     {
         $user=\Auth::user();
+        \Storage::disk('s3')->delete('/self_images/'.$user->selfimg);
         $user->delete();
         
         return redirect('/');
@@ -99,14 +98,8 @@ class UsersController extends Controller
         $imgsize=100;
         
         $users_correction=User::withCount('corrections')->orderBy('corrections_count','desc')->get();
-        foreach($users_correction as $user_correction){
-            $user_correction->ImgResize($imgsize);
-        }
         
         $users_enpost=User::withCount('enposts')->orderBy('enposts_count','desc')->get();
-        foreach($users_enpost as $user_enpost){
-            $user_enpost->ImgResize($imgsize);
-        }
         
         $users_bc=User::withCount('corrections')
         ->orderBy('corrections_count','desc')
@@ -114,9 +107,6 @@ class UsersController extends Controller
             $query->where('bcflag',1);
         })
         ->get();
-        foreach($users_bc as $user_bc){
-            $user_bc->ImgResize($imgsize);
-        }
         
         $data=[
             'users_correction'=>$users_correction,

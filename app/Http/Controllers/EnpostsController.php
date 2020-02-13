@@ -20,10 +20,6 @@ class EnpostsController extends Controller
         if(\Auth::check()){
             $enposts=Enpost::orderBy('created_at','desc')->paginate(10);
             
-            foreach ($enposts as $enpost){
-                $enpost->user()->first()->ImgResize(120);
-            }
-            
             $data=[
               'enposts'=>$enposts,  
             ];
@@ -47,9 +43,9 @@ class EnpostsController extends Controller
         $filename="";
         $request=request();
         if($request->postimg!=null){
-            $originalimage=$request->file('postimg');
-            $filename=time().'.'.$originalimage->getClientOriginalExtension();
-            $postimage=InterventionImage::make($originalimage)->save(storage_path().'/app/public/post_images/'.$filename);
+            $postimage=$request->file('postimg');
+            $filename=time().'.'.$postimage->getClientOriginalExtension();
+             \Storage::disk('s3')->putFileAs('/post_images/',$postimage, $filename,'public');
         }
         
         $request->user()->enposts()->create([
@@ -74,7 +70,7 @@ class EnpostsController extends Controller
             }
         }
         
-        return back();
+        return redirect('/');
     }
     
     //投稿の編集
@@ -94,17 +90,16 @@ class EnpostsController extends Controller
         
         $filename="";
         if($request->postimg!=null){
-            $originalimage=$request->file('postimg');
+            $postimage=$request->file('postimg');
             if($enpost->postimg!=null){
                 $filename=$enpost->postimg;   
             }else{
-                $filename=time().'.'.$originalimage->getClientOriginalExtension();
+                $filename=time().'.'.$postimage->getClientOriginalExtension();
             }
-            $postimage=InterventionImage::make($originalimage)->save(storage_path().'/app/public/post_images/'.$filename);
+             \Storage::disk('s3')->putFileAs('/post_images/',$postimage, $filename,'public');
         }else{
             if($enpost->postimg!=null){
-                $imgpath=storage_path().'/app/public/post_images'.$enpost->postimg;
-                \File::delete($imgpath);
+                \Storage::disk('s3')->delete('/post_images/'.$enpost->postimg);
             }
         }
         
@@ -129,7 +124,7 @@ class EnpostsController extends Controller
             ]);
         }
         
-        return back();
+        return redirect('/');
     }
     
     //投稿を削除
@@ -138,6 +133,7 @@ class EnpostsController extends Controller
         $enpost = Enpost::find($id);
 
         if (\Auth::id() === $enpost->user_id) {
+            \Storage::disk('s3')->delete('/post_images/'.$enpost->postimg);
             $enpost->delete();
         }
 
@@ -149,9 +145,6 @@ class EnpostsController extends Controller
     {
         $data=[];
         $enpost=Enpost::find($id);
-        if($enpost->postimg!=""){
-            $enpost->ImgResize(200);
-        }
         $tags=Tag::where('enpost_id','=',$id)->get();
         $corrections=Correction::where('enpost_id','=',$enpost->id)->get();
         $bestcorrection=Correction::where('enpost_id','=',$id)->where('bcflag','=',1)->first();

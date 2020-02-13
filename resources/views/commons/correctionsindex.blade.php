@@ -1,7 +1,7 @@
  <ul class="list-unstyled">
     @foreach ($enposts as $enpost)
         <li class="media mb-3">
-            <img class="mr-2 rounded" src="{{ asset('/storage/self_images/'.$enpost->user->selfimg) }}" alt="">
+            <img class="mr-2 rounded" src="{{\Storage::disk('s3')->url('self_images/'.$enpost->user->selfimg)}}" width="150" height="auto" alt="">
             <div class="media-body">
                 <div>
                     <a href="{{ route('users.show', ['id' => $enpost->user->id]) }}">{{$enpost->user->name}}</a><br>
