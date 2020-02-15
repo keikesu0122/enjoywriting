@@ -21,7 +21,6 @@ class UsersController extends Controller
           'enposts'=>$enposts,
         ];
         
-        
         return view('users.show', $data);
         
     }
@@ -54,6 +53,15 @@ class UsersController extends Controller
         ]);
     }
     
+    public function passwordedit()
+    {
+        $user=\Auth::user();
+        
+        return view('users.passwordedit',[
+            'user'=>$user
+        ]);
+    }
+    
     public function update (UserRequest $request)
     {
         $user=\Auth::user();
@@ -67,19 +75,39 @@ class UsersController extends Controller
                 $filename=time().'.'.$selfimage->getClientOriginalExtension();
             }
             \Storage::disk('s3')->putFileAs('/self_images/',$selfimage, $filename,'public');
-        }else{
+            $user->selfimg=$filename;
+        }/*else{
             if($user->selfimg!=null){
                 \Storage::disk('s3')->delete('/self_images/'.$user->selfimg);
             }
             $filename="default.jpg";
-        }
+        }*/
         
         $user->name=$request->name;
         $user->email=$request->email;
-        $user->password=bcrypt($request->password);
+        //$user->password=bcrypt($request->password);
         $user->introtext=$request->introtext;
-        $user->selfimg=$filename;
         $user->save();
+        
+        return redirect('/');
+    }
+    
+    public function passwordupdate (Request $request)
+    {
+        
+        $user=\Auth::user();
+        
+        $this->validate($request, [
+            'oldpassword'=>'required',
+            'password' => 'required|string|min:6|confirmed',    
+        ]);
+        
+        if(!\Hash::check($request->oldpassword, $user->password)){
+            return back()->with('error_message','現在のパスワードが違います');
+        }else{
+            $user->password=bcrypt($request->password);
+            $user->save();
+        }
         
         return redirect('/');
     }

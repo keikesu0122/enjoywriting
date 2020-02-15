@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('users/{id}/corrections', 'UsersController@showcorrections')->name('users.showcorrections');
     //ユーザ情報編集
     Route::get('users/{id}/edit', 'UsersController@edit')->name('users.edit');
+    Route::get('users/{id}/password/edit', 'UsersController@passwordedit')->name('users.passwordedit');
+    Route::put('users/{id}/password', 'UsersController@passwordupdate')->name('users.passwordupdate');    
     Route::put('users/{id}', 'UsersController@update')->name('users.update');
     //ユーザ削除
     Route::delete('users/{id}', 'UsersController@destroy')->name('users.destroy');

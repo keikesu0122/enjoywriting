@@ -78,10 +78,27 @@ class EnpostsController extends Controller
     {
         
         $enpost=Enpost::find($id);
+        $tags=$enpost->tags()->get();
         
-        return view('enposts.edit',[
-            'enpost'=>$enpost,    
-        ]);
+        $i=0;
+        $oldtag="";
+        
+        foreach($tags as $tag){
+            if($oldtag==""){
+                $oldtag=$tag->tag;
+            }else{
+                $oldtag=$oldtag.",".$tag->tag;
+            }
+        }
+        
+        if(\Auth::id()==$enpost->user_id){
+            return view('enposts.edit',[
+                'enpost'=>$enpost,    
+                'oldtag'=>$oldtag
+            ]);
+        }else{
+            return redirect('/');
+        }
     }
     
     public function update(EnpostRequest $request, $id)

@@ -9,11 +9,12 @@
         {{$user->introtext}}
     </div>
     @if(Auth::user()->id==$user->id)
-        <div class="form-inline mt-2">
-            {!! link_to_route('users.edit', '編集', ['id'=>$user->id], ['class' => 'btn btn-primary mr-2']) !!}
+        <div class="form-inline mt-2 mb-2">
+            {!! link_to_route('users.edit', '登録情報編集', ['id'=>$user->id], ['class' => 'btn btn-primary mr-2']) !!}
+            {!! link_to_route('users.passwordedit', 'パスワード変更', ['id'=>$user->id], ['class' => 'btn btn-success mr-2']) !!}
+        </div>
             {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}
                 {!! Form::submit('退会', ['class' => 'btn btn-danger btn-sm']) !!}
             {!! Form::close() !!}
-        </div>
     @endif
 </div>

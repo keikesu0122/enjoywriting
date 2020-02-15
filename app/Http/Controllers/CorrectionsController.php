@@ -21,8 +21,14 @@ class CorrectionsController extends Controller
         if($enpost->is_correctedby()){
             $correction_id=$enpost->corrections()->where('user_id','=',$user->id)->first()->id;
             $correction=Correction::find($correction_id);
+            if(\Auth::id()!=$correction->user_id | \Auth::id()==$enpost->user_id){
+                return redirect('/');
+            }
         }else{
             $correction = new Correction;
+            if(\Auth::id()==$enpost->user_id){
+                return redirect('/');
+            }
         }
     
         $tags=Tag::where('enpost_id','=',$enpost_id)->get();
@@ -79,14 +85,6 @@ class CorrectionsController extends Controller
         $corrections=Correction::where('enpost_id','=', $enpost_id)->get();
         $bestcorrection=null;
         
-        /*$data=[
-            'enpost'=>$enpost,
-            'tags'=>$tags,
-            'corrections'=>$corrections,
-            'bestcorrection'=>$bestcorrection,
-        ];*/
-        
-        //return view('enposts.show',$data);
         return redirect('/');
     }
     
