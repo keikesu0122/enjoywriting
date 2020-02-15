@@ -13,7 +13,7 @@ class EnpostLikeController extends Controller
         $user=\Auth::user();
         
         
-        If($enpost->is_likedby($user->id)!=True)
+        if($enpost->is_likedby($user->id)!=True)
         {
             $enpost->users()->attach($user->id);
         }
@@ -26,7 +26,7 @@ class EnpostLikeController extends Controller
         $enpost=Enpost::find($enpost_id);
         $user=\Auth::user();
         
-        If($enpost->is_likedby($user->id))
+        if($enpost->is_likedby($user->id))
         {
             $enpost->users()->detach($user->id);
         }

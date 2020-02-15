@@ -41,7 +41,6 @@ class EnpostsController extends Controller
         
         //画像の保存処理（storageの下に保存）
         $filename="";
-        $request=request();
         if($request->postimg!=null){
             $postimage=$request->file('postimg');
             $filename=time().'.'.$postimage->getClientOriginalExtension();
@@ -174,5 +173,43 @@ class EnpostsController extends Controller
         ];
         
         return view('enposts.show',$data);
+    }
+    
+    //検索機能
+    public function search(Request $request)
+    {
+        $query=Enpost::query();
+        $username=$request->user;
+        $user=User::where('name',$username)->first();
+        $title=$request->title;
+        $entext=$request->entext;
+        $tagword=$request->tag;
+        $tags=Tag::where('tag',$tagword)->get();
+        
+        if(!empty($user)){
+            $query->where('user_id',$user->id)->get();
+        }
+        
+        if(!empty($title)){
+            $query->where('title', 'like', '%'.$title.'%')->get();
+        }
+        
+        if(!empty($entext)){
+            $query->where('entext', 'like', '%'.$entext.'%')->get();
+        }
+        
+        if(!empty($tagword)){
+            foreach($tags as $tag){
+                $enpost_id=$tag->enpost()->first()->id;
+                $query->where('id', $enpost_id)->get();
+            }
+        }
+        
+        $enposts=$query->orderBy('created_at','desc')->paginate(10);
+        
+        return view('enposts.index',[
+            'enposts'=>$enposts    
+        ]);
+        
     }
 }

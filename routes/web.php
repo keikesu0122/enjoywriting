@@ -24,6 +24,9 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
 
 Route::group(['middleware' => ['auth']], function () {
+    
+    //投稿検索
+    Route::get('enposts/search', 'EnpostsController@search')->name('enposts.search');
     //投稿
     Route::get('enposts/create', 'EnpostsController@create')->name('enposts.create');
     Route::post('enposts', 'EnpostsController@store')->name('enposts.store');
@@ -34,12 +37,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('enposts/{id}', 'EnpostsController@destroy')->name('enposts.destroy');
     //投稿詳細
     Route::get('enposts/{id}', 'EnpostsController@show')->name('enposts.show');
+    
     //添削
     Route::get('corrections/{enpost_id}/correct', 'CorrectionsController@correct')->name('corrections.correct');
     Route::put('corrections/{correction_id}/bccorrection', 'CorrectionsController@bestcorrection')->name('corrections.bestcorrection');
     Route::post('corrections/{enpost_id}', 'CorrectionsController@uploadcorrection')->name('corrections.uploadcorrection');
     Route::put('corrections/{enpost_id}', 'CorrectionsController@updatecorrection')->name('corrections.updatecorrection');
-     Route::delete('corrections/{correction_id}', 'CorrectionsController@destroy')->name('corrections.destroy');
+    Route::delete('corrections/{correction_id}', 'CorrectionsController@destroy')->name('corrections.destroy');
     //ランキング
     Route::get('users/ranking', 'UsersController@ranking')->name('users.ranking');
     //ユーザ詳細
