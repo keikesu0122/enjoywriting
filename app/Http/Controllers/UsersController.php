@@ -70,22 +70,15 @@ class UsersController extends Controller
         if($request->selfimg!=null){
             $selfimage=$request->file('selfimg');
             if($user->selfimg!="default.jpg"){
-                $filename=$user->selfimg;   
-            }else{
-                $filename=time().'.'.$selfimage->getClientOriginalExtension();
+                \Storage::disk('s3')->delete('/self_images/'.$user->selfimg);  
             }
+            $filename=time().'.'.$selfimage->getClientOriginalExtension();
             \Storage::disk('s3')->putFileAs('/self_images/',$selfimage, $filename,'public');
             $user->selfimg=$filename;
-        }/*else{
-            if($user->selfimg!=null){
-                \Storage::disk('s3')->delete('/self_images/'.$user->selfimg);
-            }
-            $filename="default.jpg";
-        }*/
+        }
         
         $user->name=$request->name;
         $user->email=$request->email;
-        //$user->password=bcrypt($request->password);
         $user->introtext=$request->introtext;
         $user->save();
         

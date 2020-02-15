@@ -109,10 +109,9 @@ class EnpostsController extends Controller
         if($request->postimg!=null){
             $postimage=$request->file('postimg');
             if($enpost->postimg!=null){
-                $filename=$enpost->postimg;   
-            }else{
-                $filename=time().'.'.$postimage->getClientOriginalExtension();
+                \Storage::disk('s3')->delete('/post_images/'.$enpost->postimg);
             }
+            $filename=time().'.'.$postimage->getClientOriginalExtension();
              \Storage::disk('s3')->putFileAs('/post_images/',$postimage, $filename,'public');
         }else{
             if($enpost->postimg!=null){
