@@ -59,15 +59,7 @@ class CorrectionsController extends Controller
         $corrections=Correction::where('enpost_id','=', $enpost_id)->get();
         $bestcorrection=null;
         
-        /*$data=[
-            'enpost'=>$enpost,
-            'tags'=>$tags,
-            'corrections'=>$corrections,
-            'bestcorrection'=>$bestcorrection,
-        ];*/
-        
-        //return view('enposts.show',$data);
-        return redirect('/');
+        return redirect('/')->with('flash_message', '添削を投稿しました。');
     }
     
     //添削を編集

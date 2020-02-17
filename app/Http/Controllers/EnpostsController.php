@@ -39,7 +39,7 @@ class EnpostsController extends Controller
     public function store(EnpostRequest $request)
     {
         
-        //画像の保存処理（storageの下に保存）
+        //画像の保存処理（S3に保存）
         $filename="";
         if($request->postimg!=null){
             $postimage=$request->file('postimg');

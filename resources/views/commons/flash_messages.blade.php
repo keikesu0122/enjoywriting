@@ -1,5 +1,5 @@
 @if (session('flash_message'))
-    <div class="rounded" style="background-color: #99FFFF; width: 250px; height: 40px; padding-left:10px; padding-top:10px;">
+    <div style="color: #00ff7f; font-weight: bolder;">
         {{ session('flash_message') }}
     </div>
 @endif

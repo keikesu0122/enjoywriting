@@ -7,6 +7,7 @@ use App\Enpost;
 
 class EnpostLikeController extends Controller
 {
+    //いいねをする
     public function store($enpost_id)
     {
         $enpost=Enpost::find($enpost_id);
@@ -21,6 +22,7 @@ class EnpostLikeController extends Controller
         return back();
     }
     
+    //いいねを消す
     public function destroy($enpost_id)
     {
         $enpost=Enpost::find($enpost_id);
