@@ -69,7 +69,7 @@ class EnpostsController extends Controller
             }
         }
         
-        return redirect('/');
+        return redirect('/')->with('flash_message', '投稿が完了しました。');
     }
     
     //投稿の編集
@@ -139,7 +139,7 @@ class EnpostsController extends Controller
             ]);
         }
         
-        return redirect('/');
+        return redirect('/')->with('flash_message', '編集が完了しました。');
     }
     
     //投稿を削除
@@ -152,7 +152,7 @@ class EnpostsController extends Controller
             $enpost->delete();
         }
 
-        return redirect('/');
+        return redirect('/')->with('flash_message', '削除が完了しました。');
     }
     
     //投稿の詳細を表示

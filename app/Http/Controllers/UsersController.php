@@ -82,7 +82,7 @@ class UsersController extends Controller
         $user->introtext=$request->introtext;
         $user->save();
         
-        return redirect('/');
+        return redirect('/')->with('flash_message', '会員情報の変更が完了しました。');
     }
     
     public function passwordupdate (Request $request)
@@ -102,7 +102,7 @@ class UsersController extends Controller
             $user->save();
         }
         
-        return redirect('/');
+        return redirect('/')->with('flash_message', 'パスワードの変更が完了しました。');
     }
     
     public function destroy()

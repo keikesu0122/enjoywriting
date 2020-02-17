@@ -39,7 +39,7 @@ class CorrectionsController extends Controller
             'correction'=>$correction,
         ];
         
-        return view('corrections.correct',$data);
+        return view('corrections.correct',$data)->with('flash_message', '添削を投稿しました。');
     }
     
     public function uploadcorrection(CorrectionRequest $request, $enpost_id)
@@ -85,7 +85,7 @@ class CorrectionsController extends Controller
         $corrections=Correction::where('enpost_id','=', $enpost_id)->get();
         $bestcorrection=null;
         
-        return redirect('/');
+        return redirect('/')->with('flash_message', '添削を編集しました。');
     }
     
     //添削を削除
@@ -97,7 +97,7 @@ class CorrectionsController extends Controller
             $correction->delete();
         }
 
-        return redirect('/');
+        return redirect('/')->with('flash_message', '添削を削除しました。');
     }
     
     //ベスト添削が選ばれた時にフラグやステータスを変更
