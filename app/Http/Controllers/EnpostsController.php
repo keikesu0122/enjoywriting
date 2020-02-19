@@ -47,27 +47,30 @@ class EnpostsController extends Controller
              \Storage::disk('s3')->putFileAs('/post_images/',$postimage, $filename,'public');
         }
         
-        $request->user()->enposts()->create([
-           'title'=>$request->title,
-           'entext'=>$request->entext,
-           'jptext'=>$request->jptext,
-           'postimg'=>$filename,
-           'status'=>0,
-        ]);
         
-        //タグは1単語ずつ分割して保存
-        if($request->tag!=null){
-            $max_enpost_id=Enpost::max('id');
-            $enpost=Enpost::find($max_enpost_id);
-            $combinedtags=$request->tag;
-            $tags=explode(",",$combinedtags);
+        \DB::transaction(function () use ($request, $filename){
+            $request->user()->enposts()->create([
+               'title'=>$request->title,
+               'entext'=>$request->entext,
+               'jptext'=>$request->jptext,
+               'postimg'=>$filename,
+               'status'=>config('const.open'),
+            ]);
             
-            foreach ($tags as $tag){
-                $enpost->tags()->create([
-                   'tag'=>$tag,
-                ]);
+            //タグは1単語ずつ分割して保存
+            if($request->tag!=null){
+                $max_enpost_id=Enpost::max('id');
+                $enpost=Enpost::find($max_enpost_id);
+                $combinedtags=$request->tag;
+                $tags=explode(",",$combinedtags);
+                
+                foreach ($tags as $tag){
+                    $enpost->tags()->create([
+                       'tag'=>$tag,
+                    ]);
+                }
             }
-        }
+        });
         
         return redirect('/')->with('flash_message', '投稿が完了しました。');
     }

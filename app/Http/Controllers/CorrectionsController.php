@@ -101,7 +101,7 @@ class CorrectionsController extends Controller
         
         
         $enpost=Enpost::find($correction->enpost()->first()->id);
-        $enpost->status=1;
+        $enpost->status=config('const.closed');
         $enpost->save();
         
         return back();
