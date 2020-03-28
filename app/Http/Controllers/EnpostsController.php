@@ -19,9 +19,12 @@ class EnpostsController extends Controller
         $data=[];
         if(\Auth::check()){
             $enposts=Enpost::orderBy('created_at','desc')->paginate(10);
+            $users=User::select('id', 'name')->get()->pluck('name', 'id');
+            
             
             $data=[
-              'enposts'=>$enposts,  
+              'enposts'=>$enposts,
+              'users'=>$users
             ];
         }
         
@@ -54,7 +57,7 @@ class EnpostsController extends Controller
                'entext'=>$request->entext,
                'jptext'=>$request->jptext,
                'postimg'=>$filename,
-               'status'=>config('const.open'),
+               'status'=>\Constant::open,
             ]);
             
             //タグは1単語ずつ分割して保存
@@ -166,13 +169,14 @@ class EnpostsController extends Controller
         $tags=Tag::where('enpost_id','=',$id)->get();
         $corrections=Correction::where('enpost_id','=',$enpost->id)->get();
         $bestcorrection=Correction::where('enpost_id','=',$id)->where('bcflag','=',1)->first();
-        
+        $likes=$enpost->likeuser()->count();
         
         $data=[
             'enpost'=>$enpost,
             'tags'=>$tags,
             'corrections'=>$corrections,
             'bestcorrection'=>$bestcorrection,
+            'likes'=>$likes,
         ];
         
         return view('enposts.show',$data);
@@ -181,16 +185,15 @@ class EnpostsController extends Controller
     //検索機能
     public function search(Request $request)
     {
+        
         $query=Enpost::query();
-        $username=$request->user;
-        $user=User::where('name',$username)->first();
         $title=$request->title;
         $entext=$request->entext;
         $tagword=$request->tag;
         $tags=Tag::where('tag',$tagword)->get();
         
-        if(!empty($user)){
-            $query->where('user_id',$user->id)->get();
+        if(!empty($request->user)){
+            $query->where('user_id',$request->user)->get();
         }
         
         if(!empty($title)){
@@ -208,10 +211,40 @@ class EnpostsController extends Controller
             }
         }
         
-        $enposts=$query->orderBy('created_at','desc')->paginate(10);
+        if($request->correction==1){
+            $query->where('status',\Constant::open)->where('user_id','!=',\Auth::user()->id)->get();
+        }
+        
+        
+        
+        switch($request->sort){
+            case 0:
+                $enposts=$query->orderBy('created_at','desc')->paginate(10);
+                break;
+            case 1:
+                $enposts=$query->orderBy('created_at','asc')->paginate(10);
+                break;
+            case 2:
+                $enposts = $query->withCount('corrections')->orderBy('corrections_count','desc')->paginate(10);
+                break;
+            case 3:
+                $enposts = $query->withCount('corrections')->orderBy('corrections_count','asc')->paginate(10);
+                break;
+            case 4:
+                $enposts = $query->withCount('likeuser')->orderBy('likeuser_count','desc')->paginate(10);
+                break;
+            case 5:
+                $enposts = $query->withCount('likeuser')->orderBy('likeuser_count','asc')->paginate(10);
+                break;
+        }
+        
+        
+        
+        $users=User::select('id', 'name')->get()->pluck('name', 'id');
         
         return view('enposts.index',[
-            'enposts'=>$enposts    
+            'enposts'=>$enposts,
+            'users'=>$users
         ]);
         
     }

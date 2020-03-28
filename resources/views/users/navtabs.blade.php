@@ -1,4 +1,15 @@
- <ul class="nav nav-tabs nav-justified mb-3">
-    <li class="nav-item"><a href="{{ route('users.show', ['id' => $user->id]) }}" class="nav-link {{ Request::is('users/' . $user->id) ? 'active' : '' }}">過去の投稿</a></li>
-    <li class="nav-item"><a href="{{ route('users.showcorrections', ['id' => $user->id]) }}" class="nav-link {{ Request::is('users/' . $user->id) ? 'active' : '' }}">添削した投稿</a></li>
+ <ul id="users-navtabs-tab">
+  <li 
+   v-bind:class="{active:activeTab==='enposts-tab'}"
+   v-on:click="activeTab='enposts-tab'"
+  >
+   過去の投稿
+  </li>
+  <li 
+   v-bind:class="{active:activeTab==='corrections-tab'}"
+   v-on:click="activeTab='corrections-tab'"
+  >
+   添削した投稿
+  </li>
 </ul>
+

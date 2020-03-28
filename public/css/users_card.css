@@ -1,0 +1,36 @@
+#users-card-overlay{
+    z-index:1;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0,0,0,0.5);
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#users-card-ul-unregister{
+    list-style-type: none;
+    padding-left:0;
+}
+
+#users-card-ul-unregister li{
+    float:left;
+}
+
+#users-card-overlaycontent{
+    z-index:2;
+    width:20%;
+    padding: 1em;
+    background-color:#fff;
+}
+
+#users-card-return{
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 4px;
+  border-color: black;
+  margin-left: 10px;
+}

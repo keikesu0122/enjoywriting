@@ -11,6 +11,9 @@
 |
 */
 
+Route::get('/sample', function(){
+    return view('sample');
+});
 Route::get('/', 'EnpostsController@index')->name('enposts.index');
 
 //ユーザ登録
@@ -48,7 +51,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('users/ranking', 'UsersController@ranking')->name('users.ranking');
     //ユーザ詳細
     Route::get('users/{id}', 'UsersController@show')->name('users.show');
-    Route::get('users/{id}/corrections', 'UsersController@showcorrections')->name('users.showcorrections');
+    //Route::get('users/{id}/corrections', 'UsersController@showcorrections')->name('users.showcorrections');
     //ユーザ情報編集
     Route::get('users/{id}/edit', 'UsersController@edit')->name('users.edit');
     Route::get('users/{id}/password/edit', 'UsersController@passwordedit')->name('users.passwordedit');

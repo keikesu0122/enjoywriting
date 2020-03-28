@@ -38,7 +38,7 @@ class User extends Authenticatable
         return $this->hasMany(Correction::class);
     }
     
-    public function likeenposts()
+    public function likeenpost()
     {
         return $this->belongsToMany(Enpost::class, 'likes', 'user_id', 'enpost_id')->withTimestamps();
     }

@@ -32,11 +32,13 @@ class CorrectionsController extends Controller
         }
     
         $tags=Tag::where('enpost_id','=',$enpost_id)->get();
+        $likes=$enpost->likeuser()->count();
         
         $data=[
             'enpost'=>$enpost,
             'tags'=>$tags,
             'correction'=>$correction,
+            'likes'=>$likes,
         ];
         
         return view('corrections.correct',$data)->with('flash_message', '添削を投稿しました。');
@@ -101,7 +103,7 @@ class CorrectionsController extends Controller
         
         
         $enpost=Enpost::find($correction->enpost()->first()->id);
-        $enpost->status=config('const.closed');
+        $enpost->status=\Constant::close;
         $enpost->save();
         
         return back();

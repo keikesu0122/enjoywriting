@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('commons.enpostsdetails', ['enpost'=>$enpost, 'tags'=>$tags])
+    @include('commons.enpostsdetails', ['enpost'=>$enpost, 'tags'=>$tags, 'likes'=>$likes])
     <div class="row mt-4">
         <div class="col-sm-3 mb-5">
            @include('commons.buttons',['enpost'=>$enpost]) 

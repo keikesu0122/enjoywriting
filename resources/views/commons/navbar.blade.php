@@ -14,12 +14,12 @@
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
                 @if(Auth::check())
-                    <li class="nav-item mr-3">{!! link_to_route('users.ranking', 'ランキング') !!}</li>
-                    <li class="nav-item mr-3">{!! link_to_route('users.show', 'マイページ', ['id'=>\Auth::user()->id]) !!}</li>
-                    <li class="nav-item">{!! link_to_route('logout.get', 'ログアウト') !!}</li>
+                    <li class="nav-item mr-3">{!! link_to_route('users.ranking', 'ランキング', [], ['class' => 'nav-link']) !!}</li>
+                    <li class="nav-item mr-3">{!! link_to_route('users.show', 'マイページ', ['id'=>\Auth::user()->id], ['class' => 'nav-link']) !!}</li>
+                    <li class="nav-item">{!! link_to_route('logout.get', 'ログアウト', [], ['class' => 'nav-link']) !!}</li>
                 @else
                     <li class="nav-item mr-3">{!! link_to_route('signup.get', '会員登録') !!}</li>
-                    <li class="nav-item"></li>{!! link_to_route('login', 'ログイン') !!}</li>
+                    <li class="nav-item">{!! link_to_route('login', 'ログイン') !!}</li>
                 @endif
             </ul>
         </div>

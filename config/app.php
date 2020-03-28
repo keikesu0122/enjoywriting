@@ -125,6 +125,8 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    'log_max_files' => env('APP_LOG_MAX_FILES', '10'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -228,7 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
         'InterventionImage' => Intervention\Image\Facades\Image::class,
-
+        'Constant'=>App\Consts\Constant::class,
     ],
 
 ];

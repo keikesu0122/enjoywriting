@@ -24,7 +24,7 @@ class Enpost extends Model
         return $this->hasMany(Correction::class);
     }
     
-    public function users()
+    public function likeuser()
     {
         return $this->belongsToMany(User::class, 'likes', 'enpost_id', 'user_id')->withTimestamps();
     }
@@ -32,7 +32,7 @@ class Enpost extends Model
     //ある投稿が$user_idにいいねをされているかを判定
     public function is_likedby($user_id)
     {
-        return $this->users()->where('user_id', '=', $user_id)->exists();
+        return $this->likeuser()->where('user_id', '=', $user_id)->exists();
     }
     
     //ある投稿が$user_idに添削されているかを判定

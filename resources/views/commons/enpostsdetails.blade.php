@@ -10,6 +10,7 @@
     </div>
     <div class="col-sm-2">
         @include('enposts.like_button', ['enpost'=>$enpost])
+        <p>いいねの数：{{$likes}}</p>
     </div>
 </div>
 <div class="row mt-2">

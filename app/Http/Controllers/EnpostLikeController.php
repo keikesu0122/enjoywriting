@@ -16,7 +16,7 @@ class EnpostLikeController extends Controller
         
         if($enpost->is_likedby($user->id)!=True)
         {
-            $enpost->users()->attach($user->id);
+            $enpost->likeuser()->attach($user->id);
         }
         
         return back();
@@ -30,7 +30,7 @@ class EnpostLikeController extends Controller
         
         if($enpost->is_likedby($user->id))
         {
-            $enpost->users()->detach($user->id);
+            $enpost->likeuser()->detach($user->id);
         }
         
         return back();

@@ -2,7 +2,7 @@
 
 @section('content')
     @if(Auth::check())
-        @include('enposts.search')
+        @include('enposts.search', ['users'=>$users])
         @include('commons.enpostsindex', ['enposts'=>$enposts])
         {{ $enposts->links('pagination::bootstrap-4') }}
     @else

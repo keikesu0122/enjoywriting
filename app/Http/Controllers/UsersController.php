@@ -13,12 +13,20 @@ class UsersController extends Controller
     public function show($id)
     {
         $data=[];
+        $correctedenposts=[];
         $user=User::find($id);
-        $enposts=$user->enposts()->get();
+        $myenposts=$user->enposts()->get();
+        $corrections=$user->corrections()->get();
+        foreach($corrections as $correction){
+            $enpost=Enpost::where('id','=', $correction->enpost_id)->first();
+            $correctedenposts[]=$enpost;
+        }
         
         $data=[
           'user'=>$user,
-          'enposts'=>$enposts,
+          'enposts'=>$myenposts,
+          'corrections'=>$correctedenposts,
+          
         ];
         
         return view('users.show', $data);
@@ -116,22 +124,22 @@ class UsersController extends Controller
     
     public function ranking()
     {
-            $users_correction=User::withCount('corrections')->orderBy('corrections_count','desc')->get();
-            
-            $users_enpost=User::withCount('enposts')->orderBy('enposts_count','desc')->get();
-            
-            $users_bc=User::withCount('corrections')
-            ->orderBy('corrections_count','desc')
-            ->whereHas('corrections', function($query){
-                $query->where('bcflag',1);
-            })
-            ->get();
-            
-            $data=[
-                'users_correction'=>$users_correction,
-                'users_enpost'=>$users_enpost,
-                'users_bc'=>$users_bc,
-            ];
+        $users_correction=User::withCount('corrections')->orderBy('corrections_count','desc')->get();
+        
+        $users_enpost=User::withCount('enposts')->orderBy('enposts_count','desc')->get();
+        
+        $users_bc=User::withCount('corrections')
+        ->orderBy('corrections_count','desc')
+        ->whereHas('corrections', function($query){
+            $query->where('bcflag',1);
+        })
+        ->get();
+        
+        $data=[
+            'users_correction'=>$users_correction,
+            'users_enpost'=>$users_enpost,
+            'users_bc'=>$users_bc,
+        ];
         
         return view('users.ranking',$data);
     }
