@@ -60,7 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
     //ユーザ削除
     Route::delete('users/{id}', 'UsersController@destroy')->name('users.destroy');
     //いいね
-    Route::post('enposts/{id}/like', 'EnpostLikeController@store')->name('enposts.like');
-    Route::delete('enposts/{id}/dislike', 'EnpostLikeController@destroy')->name('enposts.dislike');
+    Route::post('/getlike', 'EnpostLikeController@getlike')->name('enposts.getlike');
+    Route::post('/addlike', 'EnpostLikeController@addlike')->name('enposts.addlike');
 });
 

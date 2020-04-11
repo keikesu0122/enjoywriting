@@ -26,10 +26,12 @@
                         {!! Form::file('postimg', ['class' => 'form-control']) !!}
                     </div>
     
-                    <div class="form-group form-inline">
-                        {!! Form::label('tag', 'タグ') !!}
+                    <div class="form-group form-inline" id="enposts-create-tag">
+                        <div @mouseover="mouseover" @mouseleave="mouseleave">
+                            {!! Form::label('tag', 'タグ') !!}
+                        </div>
                         {!! Form::text('tag',old('tag'), ['class' => 'form-control']) !!}
-                        <label>複数のタグを入力する場合には各タグをカンマで区切ってください。</label>
+                        <label v-show="isMouseOn">複数のタグを入力する場合には各タグをカンマで区切ってください。</label>
                     </div>
                     
                     {!! Form::submit('投稿する', ['class' => 'btn btn-primary btn-block mb-4']) !!}
