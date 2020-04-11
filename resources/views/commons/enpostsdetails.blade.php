@@ -9,8 +9,9 @@
         {{$enpost->jptext}}
     </div>
     <div class="col-sm-2">
-        @include('enposts.like_button', ['enpost'=>$enpost])
-        <p>いいねの数：{{$likes}}</p>
+        <div id="commons-enpostsdetails-like-button">
+            <like-button :enpost_id={{$enpost->id}}></like-button>
+        </div>
     </div>
 </div>
 <div class="row mt-2">

@@ -7,32 +7,43 @@ use App\Enpost;
 
 class EnpostLikeController extends Controller
 {
-    //いいねをする
-    public function store($enpost_id)
+    //いいねを追加・消去
+    public function addlike(Request $request)
     {
-        $enpost=Enpost::find($enpost_id);
+        $enpost=Enpost::find($request->enpost_id);
         $user=\Auth::user();
         
         
         if($enpost->is_likedby($user->id)!=True)
         {
+            $res=true;
             $enpost->likeuser()->attach($user->id);
+            $like_count=$enpost->likeuser()->count();
+        }else{
+            $res=false;
+            $enpost->likeuser()->detach($user->id);
+            $like_count=$enpost->likeuser()->count();
         }
         
-        return back();
+        return response()->json(['res'=>$res, 'like_count'=>$like_count]);
     }
     
-    //いいねを消す
-    public function destroy($enpost_id)
+    //いいねを取得
+    public function getlike(Request $request)
     {
-        $enpost=Enpost::find($enpost_id);
+        $enpost=Enpost::find($request->enpost_id);
         $user=\Auth::user();
         
-        if($enpost->is_likedby($user->id))
+        
+        if($enpost->is_likedby($user->id)!=True)
         {
-            $enpost->likeuser()->detach($user->id);
+            $res=false;
+            $like_count=$enpost->likeuser()->count();
+        }else{
+            $res=true;
+            $like_count=$enpost->likeuser()->count();
         }
         
-        return back();
+        return response()->json(['res'=>$res, 'like_count'=>$like_count]);
     }
 }
