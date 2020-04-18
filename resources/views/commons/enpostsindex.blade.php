@@ -1,4 +1,4 @@
- <ul class="list-unstyled" id="commons-enpostsindex-ul" @if(Request::is('/')) style="border-style: none;" @endif>
+ <ul class="list-unstyled" id="commons-enpostsindex" @if(Request::is('/')) style="border-style: none;" @endif>
     @foreach ($enposts as $enpost)
         <li class="media mb-3">
             <img class="mr-2 rounded" src="{{\Storage::disk('s3')->url('self_images/'.$enpost->user->selfimg)}}" width="130" height="auto" alt="">
