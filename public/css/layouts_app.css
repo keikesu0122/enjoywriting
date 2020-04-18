@@ -1,0 +1,15 @@
+.return_top {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    background-color: #999;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px 10px;
+}
+
+.return_top a:hover {
+    background-color: #666;
+    text-decoration: none;
+}

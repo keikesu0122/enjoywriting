@@ -3,38 +3,40 @@
 @section('content')
     <div class="row">
         @if(Auth::check())
-            <div class="col-sm-6">
-                {!! Form::open(['route' => 'enposts.store', 'files'=>true]) !!}
+            <div class="col-sm-8" id="enposts-create-container">
+                {!! Form::open(['route' => 'enposts.store', 'files'=>true, 'id'=>'enposts-create-form']) !!}
                     {{csrf_field()}}
-                    <div class="form-group form-inline">
-                        {!! Form::label('title', 'タイトル') !!}
-                        {!! Form::text('title', old('title'), ['class' => 'form-control']) !!}
+                    <div id="enposts-create-title">
+                        {!! Form::label('title', 'タイトル', ['id' => 'enposts-create-title-label']) !!}
+                        {!! Form::text('title', old('title'), ['id' => 'enposts-create-title-text', 'placeholder'=>'必須：タイトルを英語で入力して下さい。']) !!}
                     </div>
     
-                    <div class="form-inline">
-                        {!! Form::label('entext', '英文') !!}
-                        {!! Form::textarea('entext', old('entext')) !!}
+                    <div id="enposts-create-entext">
+                        {!! Form::label('entext', '英文', ['id' => 'enposts-create-entext-label']) !!}
+                        {!! Form::textarea('entext', old('entext'), ['id' => 'enposts-create-entext-text', 'placeholder'=>'必須：本文を英語で入力して下さい。']) !!}
                     </div>
     
-                    <div class="form-inline">
-                        {!! Form::label('jptext', '和文') !!}
-                        {!! Form::textarea('jptext', old('jptext')) !!}
+                    <div id="enposts-create-jptext">
+                        {!! Form::label('jptext', '和文', ['id' => 'enposts-create-jptext-label']) !!}
+                        {!! Form::textarea('jptext', old('jptext'), ['id' => 'enposts-create-jptext-text', 'placeholder'=>'任意：本文の和訳を入力して下さい。']) !!}
                     </div>
     
-                    <div class="form-group mt-3 form-inline">
-                        {!! Form::label('postimg', '画像') !!}
-                        {!! Form::file('postimg', ['class' => 'form-control']) !!}
+                    <div id="enposts-create-postimg">
+                        {!! Form::label('postimg', '画像', ['id' => 'enposts-create-postimg-label']) !!}
+                        {!! Form::file('postimg', ['id' => 'enposts-create-postimg-file']) !!}
                     </div>
     
-                    <div class="form-group form-inline" id="enposts-create-tag">
-                        <div @mouseover="mouseover" @mouseleave="mouseleave">
-                            {!! Form::label('tag', 'タグ') !!}
+                    <div id="enposts-create-tag">
+                        <div id="enposts-create-tag-form">
+                            {!! Form::label('tag', 'タグ', ['id' => 'enposts-create-tag-label'])  !!}
+                            <div @mouseover="mouseover" @mouseleave="mouseleave">
+                                {!! Form::text('tag',old('tag'), ['id' => 'enposts-create-tag-text', 'placeholder'=>'任意：タグを入力して下さい。']) !!}
+                            </div>
                         </div>
-                        {!! Form::text('tag',old('tag'), ['class' => 'form-control']) !!}
-                        <label v-show="isMouseOn">複数のタグを入力する場合には各タグをカンマで区切ってください。</label>
+                        <div id="enposts-create-tag-note" v-show="isMouseOn">複数のタグを入力する場合には各タグをカンマで区切ってください。</div>
                     </div>
                     
-                    {!! Form::submit('投稿する', ['class' => 'btn btn-primary btn-block mb-4']) !!}
+                    {!! Form::submit('投稿する', ['id' => 'enposts-create-button']) !!}
                 {!! Form::close() !!}
             </div>
         @endif
