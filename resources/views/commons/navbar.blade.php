@@ -1,4 +1,4 @@
-<header class="mb-4">
+<header>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark"> 
         <a class="navbar-brand" href="/">Enjoywriting</a>
          

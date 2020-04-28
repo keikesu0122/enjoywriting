@@ -45,7 +45,7 @@ new Vue({
 });
 
 new Vue({
-  el:'#users-card-modal',
+  el:'.users-card-modal',
   data:{
     showContent: false
   },
@@ -57,10 +57,28 @@ new Vue({
       this.showContent=false
     },
     stopEvent:function(){
-      event.stop()
+      event.stop
     }
   }
 });
+
+/*new Vue({
+  el:'.commons-buttons-delete',
+  data:{
+    show: false
+  },
+  methods:{
+    ModalOpen:function(){
+      this.show=true
+    },
+    ModalClose:function(){
+      this.show=false
+    },
+    EventStop:function(){
+      event.stop
+    }
+  }
+});*/
 
 const likeButton={
   props:['enpost_id', 'like_count'],
@@ -73,10 +91,10 @@ const likeButton={
   template:`
     <div>
       <button v-if='flag' v-on:click="addLikes" class="btn btn-danger btn-block">
-        いいね!!  {{count}}  
+        <i class="fas fa-thumbs-up"></i> いいね!!  {{count}}  
       </button>
        <button v-else v-on:click="addLikes" class="btn btn-default btn-block">
-        いいね!!  {{count}}
+        <i class="fas fa-thumbs-up"></i> いいね!!  {{count}}
       </button>
     </div>
   `,

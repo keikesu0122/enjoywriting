@@ -1,0 +1,44 @@
+.enposts-show-buttons{
+    width: 15%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    /*position: absolute;
+    top: 82.5%;
+    left: 3.5%;*/
+}
+
+.enposts-show-corrections{
+    width: 100%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.enposts-show-corrections-header{
+    width: 100%;
+    height:50%;
+    margin-bottom: 1%;
+    display:flex;
+}
+
+.enposts-show-corrections-header h4{
+    width: 80%;
+    padding: 0;
+}
+
+.enposts-show-corrections-content{
+    width:100%;
+    height: 50%;
+    display: flex;
+}
+
+.enposts-show-corrections-crtext{
+    width: 45%;
+    margin-right: 10%;
+}
+
+.enposts-show-corrections-comment{
+    width: 45%;
+}
+
+
+

@@ -1,25 +1,25 @@
-#enposts-create-container{
+.enposts-create-container{
   height: 1000px;
   position: relative;
 }
 
-#enposts-create-form{
+.enposts-create-form{
   position: absolute;
   top: 0;
   height: 100%;
   width: 100%;
 }
 
-#enposts-create-title{
+.enposts-create-title{
   height:8%;
 }
 
-#enposts-create-title-label{
+.enposts-create-title-label{
   display: block;
   font-weight: bold;
 }
 
-#enposts-create-title-text{
+.enposts-create-title-text{
   display: block;
   width: 60%;
   height: 45%;
@@ -28,16 +28,16 @@
   border: solid 1.5px gray;
 }
 
-#enposts-create-entext{
+.enposts-create-entext{
   height:25%;
 }
 
-#enposts-create-entext-label{
+.enposts-create-entext-label{
   display: block;
   font-weight: bold;
 }
 
-#enposts-create-entext-text{
+.enposts-create-entext-text{
   display: block;
   width: 80%;
   height: 80%;
@@ -46,16 +46,16 @@
   border: solid 1.5px gray;
 }
 
-#enposts-create-jptext{
+.enposts-create-jptext{
   height:25%;
 }
 
-#enposts-create-jptext-label{
+.enposts-create-jptext-label{
   display: block;
   font-weight: bold;
 }
 
-#enposts-create-jptext-text{
+.enposts-create-jptext-text{
   display: block;
   width: 80%;
   height: 80%;
@@ -64,11 +64,11 @@
   border: solid 1.5px gray;
 }
 
-#enposts-create-postimg{
+.enposts-create-postimg{
   height:8%;
 }
 
-#enposts-create-postimg-label{
+.enposts-create-postimg-label{
   display: block;
   font-weight: bold;
 }
@@ -80,22 +80,22 @@
   /*border: solid 1px red;*/
 }
 
-#enposts-create-tag-form{
+.enposts-create-tag-form{
   /*border: solid 1px blue;*/
   width: 60%;
   height: 100%;
 }
 
-#enposts-create-tag-form div{
+.enposts-create-tag-form div{
   height: 45%;
 }
 
-#enposts-create-tag-label{
+.enposts-create-tag-label{
   display: block;
   font-weight: bold;
 }
 
-#enposts-create-tag-text{
+.enposts-create-tag-text{
   display: block;
   width: 100%;
   height: 100%;
@@ -104,7 +104,7 @@
   border: solid 1.5px gray;
 }
 
-#enposts-create-tag-note{
+.enposts-create-tag-note{
   position: absolute;
   top:50%;
   transform: translateY(-50%);
@@ -135,7 +135,7 @@
   z-index: 0;
 }
 
-#enposts-create-button{
+.enposts-create-button{
   display: block;
   width:80%;
   height: 5%;
@@ -146,7 +146,7 @@
   border: none;
 }
 
-#enposts-create-button:hover{
+.enposts-create-button:hover{
   background-color: #191970;
   cursor: hand;
   cursor: pointer;
