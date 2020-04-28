@@ -3,39 +3,37 @@
 @section('content')
     @include('commons.enpostsdetails', ['enpost'=>$enpost, 'tags'=>$tags])
     @if(Auth::check())
-        <div class="row mt-5">
+        <div>
             @if($enpost->is_correctedby())
-                <div class="col-sm-6 form-inline">
-                    {!! Form::model($correction, ['route' => ['corrections.updatecorrection', $enpost->id], 'method'=>'put']) !!}
-                        <div class="form-inline">
-                            {!! Form::label('crtext', '添削') !!}
-                            {!! Form::textarea('crtext', $correction->crtext) !!}
+                {!! Form::model($correction, ['route' => ['corrections.updatecorrection', $enpost->id], 'method'=>'put', 'class'=>'corrections-correct-form']) !!}
+                    <div class="corrections-correct-input">
+                        <div class="corrections-correct-crtext">
+                            {!! Form::label('crtext', '添削', ['class' => 'corrections-correct-crtext-label']) !!}
+                            {!! Form::textarea('crtext', $correction->crtext, ['class' => 'corrections-correct-crtext-text']) !!}
                         </div>
         
-                        <div class="form-inline mt-3">
-                            {!! Form::label('comment', 'コメント') !!}
-                            {!! Form::textarea('comment', $correction->comment) !!}
+                        <div class="corrections-correct-comment">
+                            {!! Form::label('comment', 'コメント',  ['class' => 'corrections-correct-comment-label']) !!}
+                            {!! Form::textarea('comment', $correction->comment, ['class' => 'corrections-correct-comment-text']) !!}
                         </div>
-        
-                        {!! Form::submit('投稿する', ['class' => 'btn btn-primary btn-block mt-4 mb-4']) !!}
-                    {!! Form::close() !!}
-                </div>
+                    </div>
+                    {!! Form::submit('投稿する', ['class' => 'corrections-correct-button btn btn-primary']) !!}
+                {!! Form::close() !!}
             @else
-                <div class="col-sm-6 form-inline">
-                    {!! Form::model($correction, ['route' => ['corrections.uploadcorrection', $enpost->id]]) !!}
-                        <div class="form-inline">
-                            {!! Form::label('crtext', '添削') !!}
-                            {!! Form::textarea('crtext', old('crtext')) !!}
+                {!! Form::model($correction, ['route' => ['corrections.uploadcorrection', $enpost->id], 'class'=>'corrections-correct-form']) !!}
+                    <div class="corrections-correct-input">
+                        <div class="corrections-correct-crtext">
+                            {!! Form::label('crtext', '添削', ['class' => 'corrections-correct-crtext-label']) !!}
+                            {!! Form::textarea('crtext', old('crtext'), ['class' => 'corrections-correct-crtext-text']) !!}
                         </div>
         
-                        <div class="form-inline mt-3">
-                            {!! Form::label('comment', 'コメント') !!}
-                            {!! Form::textarea('comment', old('comment')) !!}
+                        <div class="corrections-correct-comment">
+                            {!! Form::label('comment', 'コメント', ['class' => 'corrections-correct-comment-label']) !!}
+                            {!! Form::textarea('comment', old('comment'), ['class' => 'corrections-correct-comment-text']) !!}
                         </div>
-        
-                        {!! Form::submit('投稿する', ['class' => 'btn btn-primary btn-block mt-4 mb-4']) !!}
-                    {!! Form::close() !!}
-                </div>
+                    </div>
+                    {!! Form::submit('投稿する', ['class' => 'corrections-correct-button btn btn-primary']) !!}
+                {!! Form::close() !!}
             @endif
         </div>
     @endif

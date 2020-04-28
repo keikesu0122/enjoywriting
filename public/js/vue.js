@@ -1001,7 +1001,7 @@ new Vue({
 });
 
 new Vue({
-  el: '#users-card-modal',
+  el: '.users-card-modal',
   data: {
     showContent: false
   },
@@ -1013,10 +1013,28 @@ new Vue({
       this.showContent = false;
     },
     stopEvent: function stopEvent() {
-      event.stop();
+      event.stop;
     }
   }
 });
+
+/*new Vue({
+  el:'.commons-buttons-delete',
+  data:{
+    show: false
+  },
+  methods:{
+    ModalOpen:function(){
+      this.show=true
+    },
+    ModalClose:function(){
+      this.show=false
+    },
+    EventStop:function(){
+      event.stop
+    }
+  }
+});*/
 
 var likeButton = {
   props: ['enpost_id', 'like_count'],
@@ -1027,7 +1045,7 @@ var likeButton = {
     };
   },
 
-  template: '\n    <div>\n      <button v-if=\'flag\' v-on:click="addLikes" class="btn btn-danger btn-block">\n        \u3044\u3044\u306D!!  {{count}}  \n      </button>\n       <button v-else v-on:click="addLikes" class="btn btn-default btn-block">\n        \u3044\u3044\u306D!!  {{count}}\n      </button>\n    </div>\n  ',
+  template: '\n    <div>\n      <button v-if=\'flag\' v-on:click="addLikes" class="btn btn-danger btn-block">\n        <i class="fas fa-thumbs-up"></i> \u3044\u3044\u306D!!  {{count}}  \n      </button>\n       <button v-else v-on:click="addLikes" class="btn btn-default btn-block">\n        <i class="fas fa-thumbs-up"></i> \u3044\u3044\u306D!!  {{count}}\n      </button>\n    </div>\n  ',
   created: function created() {
     this.getLikes();
   },

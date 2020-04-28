@@ -25,3 +25,14 @@ $(function(){
      return false;
   });
 });
+
+$(function(){
+    $('.commons-buttons-modal-open').on("click", function(){
+        $('.commons-buttons-modal').css('display','block');
+    });
+    
+    $('.modal-return').on("click",function(){
+        $('.commons-buttons-modal').css('display','none');
+    });
+    
+});

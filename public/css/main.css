@@ -1,5 +1,7 @@
 @import url("./users_navtabs.css");
 
+@import url("./commons_navbar.css");
+
 @import url("./commons_enpostsindex.css");
 
 @import url("./commons_correctionsindex.css");
@@ -10,3 +12,12 @@
 
 @import url("./layouts_app.css");
 
+@import url("./commons_enpostsdetails.css");
+
+@import url("./enposts_show.css");
+
+@import url("./corrections_correct.css");
+
+@import url("./enposts_edit.css");
+
+@import url("./commons_buttons.css");
