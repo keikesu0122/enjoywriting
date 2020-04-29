@@ -1,3 +1,85 @@
+.card{
+    height: 480px;
+}
+
+.card-header{
+    width: 100%;
+    height: 12%;
+    padding: 0;
+    position: relative;
+}
+
+.card-header h3{
+    position: absolute;
+    top:5%;
+    left: 5%;
+}
+
+.card-body{
+    width: 100%;
+    height: 50%;
+    padding: 0;
+    position: relative;
+}
+
+.card-body img{
+    display: block;
+    width: 70%;
+    height: auto;
+    position: absolute;
+    top:5%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.card-body-text{
+    position: absolute;
+    top: 70%;
+    left: 3%;
+}
+
+.users-card-information{
+    display: flex;
+    width: 100%;
+    height: 12%;
+    position: relative;
+}
+
+.users-card-edit{
+    width: 40%;
+    height: auto;
+    position: absolute;
+    left:6%;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-top:2%;
+    padding-bottom:2%;
+}
+
+.users-card-password{
+    width: 40%;
+    height: auto;
+    position: absolute;
+    left:54%;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-top:2%;
+    padding-bottom: 2%;
+}
+
+.users-card-modal{
+    width: 100%;
+    height: 12%;
+    position: relative;   
+}
+
+.users-card-modal button{
+    position: absolute;
+    left:6%;
+    top:50%;
+    transform: translateY(-50%);
+}
+
 .overlay{
     z-index:1;
     position: fixed;
@@ -34,3 +116,4 @@
   border-color: black;
   margin-left: 10px;
 }
+

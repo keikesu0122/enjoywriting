@@ -1,0 +1,30 @@
+.flash-messages{
+    width: 25%;
+    height: 5%;
+    position: absolute;
+    top: 0%;
+    left: 0;
+    background-color: #e6e6fa;
+    color:#696969;
+    text-align: center;
+    border-radius: 10px;
+    padding: 1%;
+    margin-bottom: 1%;
+    position: relative;
+    opacity:1;
+    transition: 0.7s;
+}
+
+/*.flash-messages.showUp{
+    opacity:1;
+    top:0%;
+}*/
+
+.flas-messages div{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  padding: 0;
+  margin:0;
+}

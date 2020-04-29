@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="{{asset('css/layouts_app.css')}}">
         <link rel="stylesheet" href="{{asset('css/users_card.css')}}">
         <link rel="stylesheet" href="{{asset('css/users_navtabs.css')}}">
+        <link rel="stylesheet" href="{{asset('css/commons_flash_messages.css')}}">
     </head>
 
     <body>
