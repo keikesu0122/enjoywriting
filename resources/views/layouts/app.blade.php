@@ -7,7 +7,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-        <link rel="stylesheet" href="{{asset('css/main.css')}}">
+        <link rel="stylesheet" href="{{asset('css/commons_buttons.css')}}">
+        <link rel="stylesheet" href="{{asset('css/commons_correctionsindex.css')}}">
+        <link rel="stylesheet" href="{{asset('css/commons_enpostsdetails.css')}}">
+        <link rel="stylesheet" href="{{asset('css/commons_enpostsindex.css')}}">
+        <link rel="stylesheet" href="{{asset('css/commons_navbar.css')}}">
+        <link rel="stylesheet" href="{{asset('css/corrections_correct.css')}}">
+        <link rel="stylesheet" href="{{asset('css/enposts_create.css')}}">
+        <link rel="stylesheet" href="{{asset('css/enposts_edit.css')}}">
+        <link rel="stylesheet" href="{{asset('css/enposts_show.css')}}">
+        <link rel="stylesheet" href="{{asset('css/layouts_app.css')}}">
+        <link rel="stylesheet" href="{{asset('css/users_card.css')}}">
+        <link rel="stylesheet" href="{{asset('css/users_navtabs.css')}}">
     </head>
 
     <body>
