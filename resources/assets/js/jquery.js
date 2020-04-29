@@ -36,3 +36,8 @@ $(function(){
     });
     
 });
+
+$(function(){
+    $('.flash_messages').css({'opacity':'0','top':'3%'});
+    
+})
