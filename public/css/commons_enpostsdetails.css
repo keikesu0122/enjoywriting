@@ -124,4 +124,9 @@
    position: absolute;
    bottom:0;
    left: 0;
+   border-radius: 5px;
+}
+
+#commons-enpostsdetails-like-button:hover{
+    background-color: #dcdcdc;
 }
